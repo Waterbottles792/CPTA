@@ -43,8 +43,9 @@ UTILITIES.display_query_context(query_context)
 # Explain to the user the rationale for the what is about to be searched
 UTILITIES.display_query_context_rationale(query_context)
 
-# Ensure the table and fields returned by the model are allowed to be queried
-GUARDRAILS.validate_tables_and_fields(query_context["table_name"], query_context["fields"])
+# Ensure the table and fields returned by the model are allowed to be queried;
+# unknown fields are dropped and the cleaned field list is used for the query.
+query_context["fields"] = GUARDRAILS.validate_tables_and_fields(query_context["table_name"], query_context["fields"])
 
 # Query Log Analytics Workspace
 law_query_results = EXECUTOR.query_log_analytics(

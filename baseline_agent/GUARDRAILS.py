@@ -28,21 +28,33 @@ ALLOWED_MODELS = {
 }
 
 def validate_tables_and_fields(table, fields):
+    """
+    Validate the model-chosen table and fields against the allow-list.
+    The table must be allowed (hard fail otherwise). Unknown fields are
+    DROPPED with a warning rather than aborting the whole run, so a single
+    hallucinated field name doesn't kill the query. Returns the cleaned,
+    comma-separated field string to use for the query.
+    """
 
     print(f"{Fore.LIGHTGREEN_EX}Validating Tables and Fields...")
     if table not in ALLOWED_TABLES:
         print(f"{Fore.RED}{Style.BRIGHT}ERROR:{Style.RESET_ALL} "f"Table '{table}' is not in allowed list — {Fore.RED}{Style.BRIGHT}exiting.{Style.RESET_ALL}")
         exit(1)
-    
-    fields = fields.replace(' ','').split(',')
 
-    for field in fields:
-        if field not in ALLOWED_TABLES[table]:
-            print(f"{Fore.RED}{Style.BRIGHT}WARNING:{Style.RESET_ALL} "
-            f"Field '{field}' is not in allowed list for Table '{table}' — {Fore.RED}{Style.BRIGHT}exiting.{Style.RESET_ALL}")
-            exit(1)
-    
-    print(f"{Fore.WHITE}Fields and tables have been validated and comply with the allowed guidelines.\n")
+    requested = [f.strip() for f in fields.split(',') if f.strip()]
+    valid = [f for f in requested if f in ALLOWED_TABLES[table]]
+    dropped = [f for f in requested if f not in ALLOWED_TABLES[table]]
+
+    for field in dropped:
+        print(f"{Fore.YELLOW}{Style.BRIGHT}WARNING:{Style.RESET_ALL} "
+              f"Field '{field}' is not allowed for Table '{table}' — dropping it.")
+
+    if not valid:
+        print(f"{Fore.RED}{Style.BRIGHT}ERROR:{Style.RESET_ALL} No valid fields left for Table '{table}' — {Fore.RED}{Style.BRIGHT}exiting.{Style.RESET_ALL}")
+        exit(1)
+
+    print(f"{Fore.WHITE}Fields and tables validated. Using: {', '.join(valid)}\n")
+    return ', '.join(valid)
 
 def validate_model(model):
     if model not in ALLOWED_MODELS:

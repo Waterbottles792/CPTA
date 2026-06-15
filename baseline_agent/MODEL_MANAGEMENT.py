@@ -6,7 +6,7 @@ import GUARDRAILS
 # Gemini doesn't use OpenAI's tier system. "1" is kept only so the display
 # logic has a key to look up; the ALLOWED_MODELS tier limits are None.
 CURRENT_TIER = "1"
-DEFAULT_MODEL = "gemini-2.5-flash"
+DEFAULT_MODEL = "gemini-2.5-flash-lite"
 WARNING_RATIO = 0.80  # 80%
 
 def money(usd):

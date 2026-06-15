@@ -506,7 +506,11 @@ def get_user_message():
 
     # Prompt the user for input, showing the current prompt as the default
     #user_input = input(f"Enter your prompt (or press Enter to keep the current one):\n[{prompt}]\n> ").strip()
-    user_input = input(f"{Fore.LIGHTBLUE_EX}Agentic SOC Analyst at your service! What would you like to do?\n\n{Fore.RESET}").strip()
+    try:
+        user_input = input(f"{Fore.LIGHTBLUE_EX}Agentic SOC Analyst at your service! What would you like to do?\n\n{Fore.RESET}").strip()
+    except (KeyboardInterrupt, EOFError):
+        print(f"\n{Fore.YELLOW}Cancelled.{Fore.RESET}")
+        raise SystemExit(0)
 
     # If user_input is empty, use the existing prompt
     if user_input:

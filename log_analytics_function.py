@@ -5,7 +5,7 @@ import pandas as pd
 
 LOG_ANALYTICS_WORKSPACE_ID = "289ad8c8-bf3f-4c11-b5a6-23d4a99e6d2a"
 
-TABLE_NAME = "AzureNetworkAnalytics"  # DeviceLogonEvents, AzureNetworkAnalytics, AzureActivity, SigninLogs
+TABLE_NAME = "DeviceLogonEvents"  # DeviceLogonEvents, AzureNetworkAnalytics, AzureActivity, SigninLogs
 
 # Keys are bare table names (match TABLE_NAME); the "_CL" suffix is added in the
 # query. Columns carry _s/_d suffixes because the data lives in custom tables.

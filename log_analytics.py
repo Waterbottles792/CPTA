@@ -10,8 +10,8 @@ TABLE_NAME = "AzureActivity"
 FIELDS = {
     "DeviceLogonEvents": "TimeGenerated, AccountName_s, DeviceName_s, ActionType_s, RemoteIP_s, RemoteDeviceName_s",
     "AzureNetworkAnalytics": "TimeGenerated, FlowType_s, SrcPublicIPs_s, DestIP_s, DestPort_d, VM_s, AllowedInFlows_d, AllowedOutFlows_d, DeniedInFlows_d, DeniedOutFlows_d",
-    "AzureActivity": "TimeGenerated, OperationNameValue_s, ActivityStatusValue_s, ResourceGroup_s, Caller_s, CallerIpAddress_s, Category_s",
-    "SigninLogs": "TimeGenerated, UserPrincipalName_s, OperationName_s, Category_s, ResultSignature_s, ResultDescription_s, AppDisplayName_s, IPAddress_s, LocationDetails_s",
+    "AzureActivity": "TimeGenerated, OperationNameValue_s, ActivityStatusValue_s, ResourceGroup, Caller_s, CallerIPAddress, Category",
+    "SigninLogs": "TimeGenerated, UserPrincipalName_s, OperationName, Category, ResultSignature, ResultDescription, AppDisplayName_s, IPAddress, LocationDetails_s",
 }
 
 # Need Azure CLI: https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?view=azure-cli-latest&pivots=msi

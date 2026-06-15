@@ -11,7 +11,7 @@ log_analytics_client = LogsQueryClient(credential=DefaultAzureCredential())
 hours_ago = 1
 
 kql_query = f"""
-DeviceLogonEvents
+CICIDS2017_CL
 | take 10
 """
 
@@ -28,6 +28,13 @@ if len(response.tables[0].rows) == 0:
     print("No data returned from Log Analytics.")
     exit
 
+print(table)
+
+columns = table.columns
+rows = table.rows
+
+print(columns)
+print(rows)
 
 # # TODO: Handle if returns 0 events
 # record_count = len(response.tables[0].rows)

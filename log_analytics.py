@@ -5,6 +5,12 @@ import pandas as pd
 
 LOG_ANALYTICS_WORKSPACE_ID = "289ad8c8-bf3f-4c11-b5a6-23d4a99e6d2a"
 
+TABLE_NAME = "AzureActivity"
+
+FIELDS = {
+    
+}
+
 # Need Azure CLI: https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?view=azure-cli-latest&pivots=msi
 log_analytics_client = LogsQueryClient(credential=DefaultAzureCredential())
 
@@ -13,6 +19,7 @@ hours_ago = 24
 kql_query = f"""
 DeviceLogonEvents_CL
 | take 10
+| project TimeGenerated, Timestamp_t, DeviceName_s, ActionType_s, RemoteIPType_s
 """
 
 response = log_analytics_client.query_workspace(

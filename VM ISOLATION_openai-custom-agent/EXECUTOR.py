@@ -97,10 +97,17 @@ def hunt(gemini_client, threat_hunt_system_message, threat_hunt_user_message, ge
             config=types.GenerateContentConfig(
                 system_instruction=threat_hunt_system_message["content"],
                 response_mime_type="application/json",
+                max_output_tokens=65536,
             ),
         )
 
         return json.loads(response.text)
+
+    except json.JSONDecodeError:
+        print(f"{Fore.LIGHTRED_EX}{Style.BRIGHT}ERROR: Gemini returned invalid or truncated JSON.{Style.RESET_ALL}")
+        print(f"{Fore.WHITE}The response was likely cut off (too many logs/findings). "
+              f"Try a narrower query — a single host or a shorter time range.\n")
+        return None
 
     except genai_errors.ClientError as e:
         error_msg = str(e)
@@ -169,7 +176,21 @@ def query_log_analytics(log_analytics_client, workspace_id, timerange_hours, tab
         user_query = f'''{table_name}
 | where UserPrincipalName startswith "{user_principal_name}"
 | project {fields}'''
-        
+
+    elif table_name == "DeviceLogonEvents":
+        # This workspace stores logon data in the custom DeviceLogonEvents_CL
+        # table, where columns carry _s/_d suffixes. Map the bare field names the
+        # model chose to their _CL equivalents (TimeGenerated keeps its name).
+        mapped_fields = ", ".join(
+            f.strip() if f.strip() == "TimeGenerated" else f"{f.strip()}_s"
+            for f in fields.split(",")
+        )
+        user_query = f'''DeviceLogonEvents_CL
+| where DeviceName_s startswith "{device_name}"
+| project {mapped_fields}
+| order by TimeGenerated desc
+| take 200'''
+
     else:
         user_query = f'''{table_name}
 | where DeviceName startswith "{device_name}"

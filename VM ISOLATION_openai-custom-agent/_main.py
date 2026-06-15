@@ -40,7 +40,7 @@ query_context = UTILITIES.sanitize_query_context(unformatted_query_context)
 UTILITIES.display_query_context(query_context)
 
 # Ensure the table and fields returned by the model are allowed to be queried
-GUARDRAILS.validate_tables_and_fields(query_context["table_name"], query_context["fields"])
+query_context["fields"] = GUARDRAILS.validate_tables_and_fields(query_context["table_name"], query_context["fields"])
 
 # Query Log Analytics Workspace
 law_query_results = EXECUTOR.query_log_analytics(

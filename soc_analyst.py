@@ -22,7 +22,7 @@ MODEL = "gemini-2.5-flash"
 
 MAX_OUTPUT_TOKENS = 5000
 
-HOURS_AGO = 3
+HOURS_AGO = 720  # 30 days (synthetic data is older than a few hours)
 
 KQL_QUERY = """
 DeviceLogonEvents_CL

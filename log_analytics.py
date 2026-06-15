@@ -8,7 +8,10 @@ LOG_ANALYTICS_WORKSPACE_ID = "289ad8c8-bf3f-4c11-b5a6-23d4a99e6d2a"
 TABLE_NAME = "AzureActivity"
 
 FIELDS = {
-    
+    "DeviceLogonEvents": "TimeGenerated, AccountName_s, DeviceName_s, ActionType_s, RemoteIP_s, RemoteDeviceName_s",
+    "AzureNetworkAnalytics": "TimeGenerated, FlowType_s, SrcPublicIPs_s, DestIP_s, DestPort_d, VM_s, AllowedInFlows_d, AllowedOutFlows_d, DeniedInFlows_d, DeniedOutFlows_d",
+    "AzureActivity": "TimeGenerated, OperationNameValue_s, ActivityStatusValue_s, ResourceGroup_s, Caller_s, CallerIpAddress_s, Category_s",
+    "SigninLogs": "TimeGenerated, UserPrincipalName_s, OperationName_s, Category_s, ResultSignature_s, ResultDescription_s, AppDisplayName_s, IPAddress_s, LocationDetails_s",
 }
 
 # Need Azure CLI: https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?view=azure-cli-latest&pivots=msi

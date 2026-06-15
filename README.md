@@ -26,17 +26,9 @@ production logs.
 
 ## Components
 
-### Agents
+### Agent
 
-Three self-contained agent variants live in their own directories. Each shares
-the same module layout.
-
-- `baseline_agent/` — the reference implementation.
-- `PROMPT ENGINEERING_openai-custom-agent_openai-custom-agent/` — prompt-tuning
-  variant.
-- `VM ISOLATION_openai-custom-agent/` — VM isolation variant.
-
-Each agent is built from these modules:
+The agent lives in `baseline_agent/` and is built from these modules:
 
 | Module | Responsibility |
 |---|---|
@@ -53,13 +45,9 @@ Each agent is built from these modules:
 | Script | Purpose |
 |---|---|
 | `soc_analyst.py` | Single-shot threat hunt over a fixed `DeviceLogonEvents_CL` KQL query. |
-| `logsshort.py` / `logsshort1.py` / `logslong.py` | Threat hunt over inline log samples (no Azure connection needed). |
 | `generate_datasets.py` | Generates synthetic SigninLogs, AzureActivity, and AzureNetworkAnalytics CSVs. |
 | `generate_logons.py` | Generates a synthetic DeviceLogonEvents dataset. |
 | `ingest_to_loganalytics.py` | Posts a synthetic CSV into a custom `*_CL` table via the Log Analytics HTTP Data Collector API. |
-| `log_analytics.py` / `log_analytics_function.py` | Minimal Log Analytics query examples. |
-| `token_opt.py` | Token-count and cost-estimation experiment. |
-| `main_gemini.py` | Minimal Gemini API smoke test. |
 
 ### Synthetic data
 

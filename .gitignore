@@ -1,5 +1,4 @@
 ingest_to_loganalytics.py
-MachineLearningCVE/
 *.csv
 .env
 venv/

@@ -8,10 +8,10 @@ LOG_ANALYTICS_WORKSPACE_ID = "289ad8c8-bf3f-4c11-b5a6-23d4a99e6d2a"
 # Need Azure CLI: https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?view=azure-cli-latest&pivots=msi
 log_analytics_client = LogsQueryClient(credential=DefaultAzureCredential())
 
-hours_ago = 1
+hours_ago = 24
 
 kql_query = f"""
-CICIDS2017_CL
+DeviceLogonEvents_CL
 | take 10
 """
 
